@@ -27,9 +27,17 @@ function searchWeather() {
         let longie = parseInt(response.coord.lon);
         console.log(latie);
         console.log(longie);
+        // Changes search result into name populated in the city list
         newCity = response.name;
         let tRow = $("<div>" + newCity +"<div>");
+        
+        // Pulls information from ajax call to populate fields onto index.html
         $(".listie").append(tRow);
+        $(".city-name").text(newCity);
+        $(".temp").html("Currently:  " + response.main.temp + " &#8457;");
+        $(".humidity").html("Humidity:  " + response.main.humidity + " %");
+        $(".windspeed").html("Wind Speed:  " + response.wind.speed + " MPH");
+        
         let uvUrl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latie + "&lon=" + longie + "&appid=bb70df7726fdccc57ce65df7344701bc";
         $.ajax({
                 
@@ -37,6 +45,19 @@ function searchWeather() {
               method: "GET"
             }).then(function(response) {
               console.log(response.value);
+              $(".uv").html("UV Index: " + response.value);
+              if(response.value <= 3) {
+                  $(".uv").addClass("good");
+              }
+              else if(response.value <= 5) {
+                $(".uv").addClass("moderate");
+              }
+              else if(response.value <= 9) {
+                $(".uv").addClass("high");
+              }
+              else {
+                  $(".uv").addClass("severe");
+              }
             })
         
         
