@@ -31,13 +31,14 @@ function searchWeather() {
               url: uvUrl,
               method: "GET"
             }).then(function(response) {
-              console.log(response);
+              console.log(response.value);
             })
         
         
+            let tRow = $("<div>" + city +"<div>");
+            $(".listie").append(tRow);
         
-        
-        //   createRow(response);
+
     })
     $.ajax({
         url: forecastURL,
@@ -50,9 +51,7 @@ function searchWeather() {
         console.log(response.list[0].wind.speed);
     })
 };
-//  });
-// $(".table tbody").append(rowEl);
-// });
+;
 
 searchWeather();
 // 
