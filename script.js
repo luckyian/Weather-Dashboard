@@ -10,15 +10,17 @@ function searchWeather() {
 
     let city = "seattle";
     let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=bb70df7726fdccc57ce65df7344701bc";
+    let forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=bb70df7726fdccc57ce65df7344701bc";
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function (response) {
+        console.log(response);
         console.log(response.main.temp);
         console.log(response.main.humidity);
         console.log(response.wind.speed);
-        console.log(response.coord.lat);
-        console.log(response.coord.lon);    
+        // console.log(response.city.coord.lat);
+        // console.log(response.city.coord.lon);    
         let latie = parseInt(response.coord.lat);
         let longie = parseInt(response.coord.lon);
         console.log(latie);
@@ -36,6 +38,16 @@ function searchWeather() {
         
         
         //   createRow(response);
+    })
+    $.ajax({
+        url: forecastURL,
+        method: "GET"
+    }).then(function (response) {
+        console.log(response);
+        console.log(response.list[1].main.temp);
+        console.log(response.list[5].main.temp);
+        console.log(response.list[0].main.humidity);
+        console.log(response.list[0].wind.speed);
     })
 };
 //  });
