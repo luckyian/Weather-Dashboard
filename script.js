@@ -25,12 +25,13 @@ function searchWeather() {
         // console.log(response.city.coord.lon);    
         let latie = parseInt(response.coord.lat);
         let longie = parseInt(response.coord.lon);
-        console.log(latie);
+        console.log(response.weather[0].icon);
         console.log(longie);
         // Changes search result into name populated in the city list
         newCity = response.name;
         let tRow = $("<div>" + newCity +"<div>");
-        
+        let icon ="https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
+        $(".iconie").attr("href", icon);
         // Pulls information from ajax call to populate fields onto index.html
         $(".listie").append(tRow);
         $(".city-name").text(newCity);
@@ -74,6 +75,37 @@ function searchWeather() {
         console.log(response.list[5].main.temp);
         console.log(response.list[0].main.humidity);
         console.log(response.list[0].wind.speed);
+        newCity = response.city.name;
+        
+        $(".city-nameO").text(newCity);
+        $(".tempO9").html("9am: " + response.list[1].main.temp + " &#8457;");
+        $(".tempO6").html("6pm: " + response.list[5].main.temp + " &#8457;");
+        $(".humidityO").html("Humidity: " + response.list[0].main.humidity + " %");
+        $(".windspeedO").html("Wind Speed: " + response.list[0].wind.speed + "mph");
+        
+        $(".city-nameT").text(newCity);
+        $(".tempT9").html("9am: " + response.list[9].main.temp + " &#8457;");
+        $(".tempT6").html("6pm: " + response.list[13].main.temp + " &#8457;");
+        $(".humidityT").html("Humidity:" + response.list[8].main.humidity + " %");
+        $(".windspeedT").html("Wind Speed: " + response.list[8].wind.speed + "mph");
+
+        $(".city-nameH").text(newCity);
+        $(".tempH9").html("9am: " + response.list[17].main.temp + " &#8457;");
+        $(".tempH6").html("6pm: " + response.list[21].main.temp + " &#8457;");
+        $(".humidityH").html("Humidity: " + response.list[16].main.humidity + " %");
+        $(".windspeedH").html("Wind Speed: " + response.list[16].wind.speed + "mph");
+
+        $(".city-nameF").text(newCity);
+        $(".tempF9").html("9am: " + response.list[25].main.temp + " &#8457;");
+        $(".tempF6").html("6pm: " + response.list[29].main.temp + " &#8457;");
+        $(".humidityF").html("Humidity: " + response.list[24].main.humidity + " %");
+        $(".windspeedF").html("Wind Speed: " + response.list[24].wind.speed + "mph");
+
+        $(".city-nameI").text(newCity);
+        $(".tempI9").html("9am: " + response.list[33].main.temp + " &#8457;");
+        $(".tempI6").html("6pm: " + response.list[37].main.temp + " &#8457;");
+        $(".humidityI").html("Humidity: " + response.list[32].main.humidity + " %");
+        $(".windspeedI").html("Wind Speed: " + response.list[32].wind.speed + "mph");
     })
 };
 ;
