@@ -9,7 +9,9 @@ let listieEl = document.querySelector(".listie");
 function searchWeather() {
 
     let city = "seattle";
+   
     let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=bb70df7726fdccc57ce65df7344701bc";
+    
     let forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=bb70df7726fdccc57ce65df7344701bc";
     $.ajax({
         url: queryURL,
@@ -25,6 +27,9 @@ function searchWeather() {
         let longie = parseInt(response.coord.lon);
         console.log(latie);
         console.log(longie);
+        newCity = response.name;
+        let tRow = $("<div>" + newCity +"<div>");
+        $(".listie").append(tRow);
         let uvUrl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latie + "&lon=" + longie + "&appid=bb70df7726fdccc57ce65df7344701bc";
         $.ajax({
                 
@@ -35,8 +40,7 @@ function searchWeather() {
             })
         
         
-            let tRow = $("<div>" + city +"<div>");
-            $(".listie").append(tRow);
+           
         
 
     })
