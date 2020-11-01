@@ -48,3 +48,16 @@ height : 300px;
     float: left;
 }
 
+.good {
+    color: rgb(30, 49, 176)
+}
+
+.moderate {
+    color: rgb(65, 163, 26)
+}
+.high {
+    color: rgb(214, 208, 30)
+}
+.severe {
+    color: rgb(194, 29, 29)
+}
