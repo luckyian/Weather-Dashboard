@@ -5,26 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="jumbotron">
+        <h1 class="display-4 jumbie">Weather Dashboard</h1>
+        <p class="lead jumbie">Search for a 5-day weather forecast, accompanied by UV index by typing your desired city. All searched cities are saved to your history list.</p>
+    </div>
     <div class = "container">
         <div class = "container float-left col-3">
-            <div class = "card">
+            <div class = "card searchie">
                 <input type="text" class="form-control" placeholder="Enter a city">
             
                 <button id="search-button" type="button" class="button">Search</button>   
+                <div class = "card listie">
+                    City List   
+                </div>
+            
             </div>
         </div>
        
         <div class = "container float-right col-9">
-            <div class = "card" id = "display">Test2</div>
-        <div class = "container float-left col-3">
-            <div class = "card">
-                    City List   
+            <div class = "card weatherDis" >Test2</div>
+            <div class = "card dayO">
+                Day One forcast 
             </div>
-        </div>
-
+            <div class = "card dayT">
+                Day Two forcast 
+            </div>
+            <div class = "card dayH">
+                Day Three forcast 
+            </div>
+            <div class = "card dayF">
+                Day Four forcast 
+            </div>
+            <div class = "card dayI">
+                Day Five forcast 
+            </div>
+        
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
