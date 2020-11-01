@@ -9,15 +9,33 @@ let listieEl = document.querySelector(".listie");
 function searchWeather() {
 
     let city = "seattle";
-    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=bb70df7726fdccc57ce65df7344701bc";
+    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=bb70df7726fdccc57ce65df7344701bc";
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function (response) {
-        console.log(response);
-        // 
-        //     
-        //       createRow(response);
+        console.log(response.main.temp);
+        console.log(response.main.humidity);
+        console.log(response.wind.speed);
+        console.log(response.coord.lat);
+        console.log(response.coord.lon);    
+        let latie = parseInt(response.coord.lat);
+        let longie = parseInt(response.coord.lon);
+        console.log(latie);
+        console.log(longie);
+        let uvUrl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latie + "&lon=" + longie + "&appid=bb70df7726fdccc57ce65df7344701bc";
+        $.ajax({
+                
+              url: uvUrl,
+              method: "GET"
+            }).then(function(response) {
+              console.log(response);
+            })
+        
+        
+        
+        
+        //   createRow(response);
     })
 };
 //  });
@@ -25,13 +43,7 @@ function searchWeather() {
 // });
 
 searchWeather();
-// $.ajax({
-//   url: "https://api.openweathermap.org/data/2.5/uvi?lat= + "seattle" + &appid=bb70df7726fdccc57ce65df7344701bc"
-//   ,
-//   method: "GET"
-// }).then(function(response) {
-//   console.log(response);
-// });
+// 
 
 
 // btnEl.$("onclick", function(event) {
