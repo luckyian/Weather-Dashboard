@@ -2,14 +2,21 @@ $(document).ready(function() {
 
 let btnEl = document.querySelector(".button");
 let listieEl = document.querySelector(".listie");
+
 // let filler = userInput;
 // let city = "seattle"
 
 // let  = 
+$("#search-button").on("click", function(event) {
+    
+    searchWeather(input);
+    console.log(input);
+});
+
 function searchWeather() {
 
-    let city = "seattle";
-   
+    let city = input;
+    console.log(city);
     let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=bb70df7726fdccc57ce65df7344701bc";
     
     let forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=bb70df7726fdccc57ce65df7344701bc";
@@ -110,7 +117,7 @@ function searchWeather() {
 };
 ;
 
-searchWeather();
+
 // 
 
 
