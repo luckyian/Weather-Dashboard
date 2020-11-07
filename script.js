@@ -2,20 +2,29 @@ $(document).ready(function() {
 
 let btnEl = document.querySelector(".button");
 let listieEl = document.querySelector(".listie");
+let cityArr = [];
+localStorage.setItem("city-list", JSON.stringify(cityArr));
 
-// let filler = userInput;
-// let city = "seattle"
 
 // let  = 
 $("#search-button").on("click", function(event) {
-    
+    event.preventDefault();
+    let input = $("#form-input").val();
+
     searchWeather(input);
     console.log(input);
 });
 
-function searchWeather() {
+$("#city-button").on("click", function(event) {
+    event.preventDefault();
+    let input = $("#form-input").val();
 
-    let city = input;
+    searchWeather(input);
+    console.log(input);
+});
+function searchWeather(city) {
+
+    // let city = "seattle";
     console.log(city);
     let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=bb70df7726fdccc57ce65df7344701bc";
     
@@ -36,7 +45,7 @@ function searchWeather() {
         console.log(longie);
         // Changes search result into name populated in the city list
         newCity = response.name;
-        let tRow = $("<div>" + newCity +"<div>");
+        let tRow = $("<div class = cityList>" + newCity +"</div>");
         let icon ="https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
         $(".iconie").attr("href", icon);
         // Pulls information from ajax call to populate fields onto index.html
