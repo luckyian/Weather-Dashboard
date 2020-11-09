@@ -2,11 +2,30 @@ $(document).ready(function() {
 
 let btnEl = document.querySelector(".button");
 let listieEl = document.querySelector(".listie");
-let cityArr = [];
-localStorage.setItem("city-list", JSON.stringify(cityArr));
+let cityArr =  JSON.parse(localStorage.getItem("city-list")) || [];
+
+function cityList(){
+let tRow = $("<div class = cityList>" + cityArr +"</div>");
+$(".listie").append(tRow);
+};
+cityList();
+
+let currentCity = localStorage.getItem("currentCity") || "";
+localStorage.getItem("currentCity", currentCity);
+console.log(currentCity);
+searchWeather(currentCity);
+
+function timeConverter(UNIX_timestamp){
+    var a = new Date(UNIX_timestamp * 1000);
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var time = month + ' ' + date + ' ' + year;
+    return time;
+  }
 
 
-// let  = 
 $("#search-button").on("click", function(event) {
     event.preventDefault();
     let input = $("#form-input").val();
@@ -15,17 +34,19 @@ $("#search-button").on("click", function(event) {
     console.log(input);
 });
 
-$("#city-button").on("click", function(event) {
-    event.preventDefault();
-    let input = $("#form-input").val();
+// $("#city-button").on("click", function(event) {
+//     event.preventDefault();
+//     let input = $("#form-input").val();
 
-    searchWeather(input);
-    console.log(input);
-});
+//     searchWeather(input);
+//     console.log(input);
+// });
 function searchWeather(city) {
+    let currentCity = city;
+    localStorage.setItem("currentCity", currentCity);
 
     // let city = "seattle";
-    console.log(city);
+    // console.log(city);
     let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=bb70df7726fdccc57ce65df7344701bc";
     
     let forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=bb70df7726fdccc57ce65df7344701bc";
@@ -34,22 +55,29 @@ function searchWeather(city) {
         method: "GET"
     }).then(function (response) {
         console.log(response);
-        console.log(response.main.temp);
-        console.log(response.main.humidity);
-        console.log(response.wind.speed);
+        // console.log(response.main.temp);
+        // console.log(response.main.humidity);
+        // console.log(response.wind.speed);
         // console.log(response.city.coord.lat);
         // console.log(response.city.coord.lon);    
         let latie = parseInt(response.coord.lat);
         let longie = parseInt(response.coord.lon);
-        console.log(response.weather[0].icon);
-        console.log(longie);
+        // console.log(response.weather[0].icon);
+        // console.log(longie);
         // Changes search result into name populated in the city list
         newCity = response.name;
-        let tRow = $("<div class = cityList>" + newCity +"</div>");
+        let date = timeConverter(response.dt);
+        cityArr.push(newCity);
+        localStorage.setItem("city-list", JSON.stringify(cityArr));
+        console.log(cityArr);
+        // cityList();
+
+        
+        
         let icon ="https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
         $(".iconie").attr("href", icon);
         // Pulls information from ajax call to populate fields onto index.html
-        $(".listie").append(tRow);
+        $(".date").html(date);
         $(".city-name").text(newCity);
         $(".temp").html("Currently:  " + response.main.temp + " &#8457;");
         $(".humidity").html("Humidity:  " + response.main.humidity + " %");
@@ -61,7 +89,7 @@ function searchWeather(city) {
               url: uvUrl,
               method: "GET"
             }).then(function(response) {
-              console.log(response.value);
+            //   console.log(response.value);
               $(".uv").html("UV Index: " + response.value);
               if(response.value <= 3) {
                   $(".uv").addClass("good");
@@ -86,11 +114,11 @@ function searchWeather(city) {
         url: forecastURL,
         method: "GET"
     }).then(function (response) {
-        console.log(response);
-        console.log(response.list[1].main.temp);
-        console.log(response.list[5].main.temp);
-        console.log(response.list[0].main.humidity);
-        console.log(response.list[0].wind.speed);
+        // console.log(response);
+        // console.log(response.list[1].main.temp);
+        // console.log(response.list[5].main.temp);
+        // console.log(response.list[0].main.humidity);
+        // console.log(response.list[0].wind.speed);
         newCity = response.city.name;
         
         $(".city-nameO").text(newCity);
