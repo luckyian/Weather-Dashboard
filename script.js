@@ -54,7 +54,7 @@ function searchWeather(city) {
         url: queryURL,
         method: "GET"
     }).then(function (response) {
-        console.log(response);
+        // console.log(response);
         // console.log(response.main.temp);
         // console.log(response.main.humidity);
         // console.log(response.wind.speed);
@@ -114,7 +114,7 @@ function searchWeather(city) {
         url: forecastURL,
         method: "GET"
     }).then(function (response) {
-        // console.log(response);
+        console.log(response);
         // console.log(response.list[1].main.temp);
         // console.log(response.list[5].main.temp);
         // console.log(response.list[0].main.humidity);
@@ -126,30 +126,35 @@ function searchWeather(city) {
         $(".tempO6").html("6pm: " + response.list[5].main.temp + " &#8457;");
         $(".humidityO").html("Humidity: " + response.list[0].main.humidity + " %");
         $(".windspeedO").html("Wind Speed: " + response.list[0].wind.speed + "mph");
+        $(".dateO").html(timeConverter(response.list[5].dt));
         
         $(".city-nameT").text(newCity);
         $(".tempT9").html("9am: " + response.list[9].main.temp + " &#8457;");
         $(".tempT6").html("6pm: " + response.list[13].main.temp + " &#8457;");
         $(".humidityT").html("Humidity:" + response.list[8].main.humidity + " %");
         $(".windspeedT").html("Wind Speed: " + response.list[8].wind.speed + "mph");
+        $(".dateT").html(timeConverter(response.list[13].dt));
 
         $(".city-nameH").text(newCity);
         $(".tempH9").html("9am: " + response.list[17].main.temp + " &#8457;");
         $(".tempH6").html("6pm: " + response.list[21].main.temp + " &#8457;");
         $(".humidityH").html("Humidity: " + response.list[16].main.humidity + " %");
         $(".windspeedH").html("Wind Speed: " + response.list[16].wind.speed + "mph");
+        $(".dateH").html(timeConverter(response.list[21].dt));
 
         $(".city-nameF").text(newCity);
         $(".tempF9").html("9am: " + response.list[25].main.temp + " &#8457;");
         $(".tempF6").html("6pm: " + response.list[29].main.temp + " &#8457;");
         $(".humidityF").html("Humidity: " + response.list[24].main.humidity + " %");
         $(".windspeedF").html("Wind Speed: " + response.list[24].wind.speed + "mph");
+        $(".dateF").html(timeConverter(response.list[29].dt));
 
         $(".city-nameI").text(newCity);
         $(".tempI9").html("9am: " + response.list[33].main.temp + " &#8457;");
         $(".tempI6").html("6pm: " + response.list[37].main.temp + " &#8457;");
         $(".humidityI").html("Humidity: " + response.list[32].main.humidity + " %");
         $(".windspeedI").html("Wind Speed: " + response.list[32].wind.speed + "mph");
+        $(".dateI").html(timeConverter(response.list[37].dt));
     })
 };
 ;
