@@ -1,11 +1,11 @@
 $(document).ready(function() {
 
-let btnEl = document.querySelector(".button");
-let listieEl = document.querySelector(".listie");
+const iconEl = document.querySelector(".icon");
 let cityArr =  JSON.parse(localStorage.getItem("city-list")) || [];
 
 function cityList(){
-let tRow = $("<div class = cityList>" + cityArr +"</div>");
+    
+  let tRow = $("<div class = cityList>" + cityArr +"</div>");
 $(".listie").append(tRow);
 };
 cityList();
@@ -54,28 +54,27 @@ function searchWeather(city) {
         url: queryURL,
         method: "GET"
     }).then(function (response) {
-        // console.log(response);
-        // console.log(response.main.temp);
-        // console.log(response.main.humidity);
-        // console.log(response.wind.speed);
-        // console.log(response.city.coord.lat);
-        // console.log(response.city.coord.lon);    
+        console.log(response);
+  
         let latie = parseInt(response.coord.lat);
         let longie = parseInt(response.coord.lon);
-        // console.log(response.weather[0].icon);
-        // console.log(longie);
+        
+        let icon = response.weather[0].icon;
+        let iconURL = "https://openweathermap.org/img/w/" + icon + ".png";
+        $(".icon").attr({src: iconURL, alt: "Weather icon."});
+        
+        
         // Changes search result into name populated in the city list
         newCity = response.name;
         let date = timeConverter(response.dt);
         cityArr.push(newCity);
         localStorage.setItem("city-list", JSON.stringify(cityArr));
         console.log(cityArr);
-        // cityList();
+        
 
         
         
-        let icon ="https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
-        $(".iconie").attr("href", icon);
+        
         // Pulls information from ajax call to populate fields onto index.html
         $(".date").html(date);
         $(".city-name").text(newCity);
@@ -122,39 +121,54 @@ function searchWeather(city) {
         newCity = response.city.name;
         
         $(".city-nameO").text(newCity);
-        $(".tempO9").html("9am: " + response.list[1].main.temp + " &#8457;");
-        $(".tempO6").html("6pm: " + response.list[5].main.temp + " &#8457;");
-        $(".humidityO").html("Humidity: " + response.list[0].main.humidity + " %");
-        $(".windspeedO").html("Wind Speed: " + response.list[0].wind.speed + "mph");
+        $(".tempO9").html("9am: " + response.list[3].main.temp + " &#8457;");
+        $(".tempO6").html("6pm: " + response.list[6].main.temp + " &#8457;");
+        $(".humidityO").html("Humidity: " + response.list[4].main.humidity + " %");
+        $(".windspeedO").html("Wind Speed: " + response.list[4].wind.speed + "mph");
         $(".dateO").html(timeConverter(response.list[5].dt));
+        let iconO = response.list[4].weather[0].icon;
+        let iconOURL = "https://openweathermap.org/img/w/" + iconO + ".png";
+        $(".icon1").attr({src: iconOURL, alt: "Weather icon."});
         
         $(".city-nameT").text(newCity);
-        $(".tempT9").html("9am: " + response.list[9].main.temp + " &#8457;");
-        $(".tempT6").html("6pm: " + response.list[13].main.temp + " &#8457;");
-        $(".humidityT").html("Humidity:" + response.list[8].main.humidity + " %");
-        $(".windspeedT").html("Wind Speed: " + response.list[8].wind.speed + "mph");
+        $(".tempT9").html("9am: " + response.list[11].main.temp + " &#8457;");
+        $(".tempT6").html("6pm: " + response.list[14].main.temp + " &#8457;");
+        $(".humidityT").html("Humidity:" + response.list[12].main.humidity + " %");
+        $(".windspeedT").html("Wind Speed: " + response.list[12].wind.speed + "mph");
         $(".dateT").html(timeConverter(response.list[13].dt));
+        let iconT = response.list[12].weather[0].icon;
+        let iconTURL = "https://openweathermap.org/img/w/" + iconT + ".png";
+        $(".icon2").attr({src: iconTURL, alt: "Weather icon."});
 
         $(".city-nameH").text(newCity);
-        $(".tempH9").html("9am: " + response.list[17].main.temp + " &#8457;");
-        $(".tempH6").html("6pm: " + response.list[21].main.temp + " &#8457;");
-        $(".humidityH").html("Humidity: " + response.list[16].main.humidity + " %");
-        $(".windspeedH").html("Wind Speed: " + response.list[16].wind.speed + "mph");
+        $(".tempH9").html("9am: " + response.list[19].main.temp + " &#8457;");
+        $(".tempH6").html("6pm: " + response.list[22].main.temp + " &#8457;");
+        $(".humidityH").html("Humidity: " + response.list[20].main.humidity + " %");
+        $(".windspeedH").html("Wind Speed: " + response.list[20].wind.speed + "mph");
         $(".dateH").html(timeConverter(response.list[21].dt));
+        let iconH = response.list[20].weather[0].icon;
+        let iconHURL = "https://openweathermap.org/img/w/" + iconH + ".png";
+        $(".icon3").attr({src: iconHURL, alt: "Weather icon."});
 
         $(".city-nameF").text(newCity);
-        $(".tempF9").html("9am: " + response.list[25].main.temp + " &#8457;");
-        $(".tempF6").html("6pm: " + response.list[29].main.temp + " &#8457;");
-        $(".humidityF").html("Humidity: " + response.list[24].main.humidity + " %");
-        $(".windspeedF").html("Wind Speed: " + response.list[24].wind.speed + "mph");
+        $(".tempF9").html("9am: " + response.list[27].main.temp + " &#8457;");
+        $(".tempF6").html("6pm: " + response.list[30].main.temp + " &#8457;");
+        $(".humidityF").html("Humidity: " + response.list[28].main.humidity + " %");
+        $(".windspeedF").html("Wind Speed: " + response.list[28].wind.speed + "mph");
         $(".dateF").html(timeConverter(response.list[29].dt));
+        let iconF = response.list[28].weather[0].icon;
+        let iconFURL = "https://openweathermap.org/img/w/" + iconF + ".png";
+        $(".icon4").attr({src: iconFURL, alt: "Weather icon."});
 
         $(".city-nameI").text(newCity);
-        $(".tempI9").html("9am: " + response.list[33].main.temp + " &#8457;");
-        $(".tempI6").html("6pm: " + response.list[37].main.temp + " &#8457;");
-        $(".humidityI").html("Humidity: " + response.list[32].main.humidity + " %");
-        $(".windspeedI").html("Wind Speed: " + response.list[32].wind.speed + "mph");
+        $(".tempI9").html("9am: " + response.list[35].main.temp + " &#8457;");
+        $(".tempI6").html("6pm: " + response.list[38].main.temp + " &#8457;");
+        $(".humidityI").html("Humidity: " + response.list[36].main.humidity + " %");
+        $(".windspeedI").html("Wind Speed: " + response.list[36].wind.speed + "mph");
         $(".dateI").html(timeConverter(response.list[37].dt));
+        let iconI = response.list[36].weather[0].icon;
+        let iconIURL = "https://openweathermap.org/img/w/" + iconI + ".png";
+        $(".icon5").attr({src: iconIURL, alt: "Weather icon."});
     })
 };
 ;
