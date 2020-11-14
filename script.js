@@ -20,7 +20,7 @@ $(document).ready(function () {
 
   function timeConverter(UNIX_timestamp) {
     var a = new Date(UNIX_timestamp * 1000);
-    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     var year = a.getFullYear();
     var month = months[a.getMonth()];
     var date = a.getDate();
@@ -35,14 +35,15 @@ $(document).ready(function () {
 
     searchWeather(input);
     console.log(input);
+    $("#form-input").val("");
   });
 
   $(".btn").on("click", function (event) {
     event.preventDefault();
-    let city = $(this.text).val();
+    // let city = $(event.text).val();
 
-    searchWeather(city);
-    console.log(input);
+    // searchWeather(city);
+    console.log(event.text);
   });
 
   // $("#city-button").on("click", function(event) {
@@ -58,9 +59,10 @@ $(document).ready(function () {
 
     // let city = "seattle";
     // console.log(city);
-    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=bb70df7726fdccc57ce65df7344701bc";
+    let apiKey = "bb70df7726fdccc57ce65df7344701bc";
+    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey;
 
-    let forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=bb70df7726fdccc57ce65df7344701bc";
+    let forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey;
     $.ajax({
       url: queryURL,
       method: "GET"
@@ -69,7 +71,7 @@ $(document).ready(function () {
       let date = timeConverter(response.dt);
       let latie = parseInt(response.coord.lat);
       let longie = parseInt(response.coord.lon);
-
+      console.log(latie);
       let icon = response.weather[0].icon;
       let iconURL = "https://openweathermap.org/img/w/" + icon + ".png";
       $(".icon").attr({ src: iconURL, alt: "Weather icon." });
@@ -94,14 +96,16 @@ $(document).ready(function () {
       $(".temp").html("Currently:  " + response.main.temp + " &#8457;");
       $(".humidity").html("Humidity:  " + response.main.humidity + " %");
       $(".windspeed").html("Wind Speed:  " + response.wind.speed + " MPH");
-
+      
       let uvUrl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latie + "&lon=" + longie + "&appid=bb70df7726fdccc57ce65df7344701bc";
+
+
       $.ajax({
 
         url: uvUrl,
         method: "GET"
       }).then(function (response) {
-        //   console.log(response.value);
+          console.log(response.value);
         $(".uv").html("UV Index: " + response.value);
         if (response.value <= 3) {
           $(".uv").addClass("good");
@@ -117,7 +121,7 @@ $(document).ready(function () {
         }
       })
 
-
+      // console.log(response.value);
 
 
 
