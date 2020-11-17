@@ -2,7 +2,7 @@ $(document).ready(function () {
 
   const iconEl = document.querySelector(".icon");
   let cityArr = JSON.parse(localStorage.getItem("city-list")) || [];
-
+  console.log(cityArr)
   function cityList() {
     cityArr.forEach(function (city) {
       let tRow = $(`<button type="button" class="btn btn-primary" id="${city}">${city}</button>`);
@@ -11,8 +11,9 @@ $(document).ready(function () {
     })
 
   };
-  cityList();
+  // cityList();
 
+  console.log(cityArr.length);
   let currentCity = localStorage.getItem("currentCity") || "";
   localStorage.getItem("currentCity", currentCity);
   console.log(currentCity);
@@ -36,6 +37,7 @@ $(document).ready(function () {
     searchWeather(input);
     console.log(input);
     $("#form-input").val("");
+
   });
 
   $(".btn").on("click", function (event) {
@@ -77,14 +79,46 @@ $(document).ready(function () {
       $(".icon").attr({ src: iconURL, alt: "Weather icon." });
 
 
-      // Changes search result into name populated in the city list
+      // Changes search result into name populated in the city list and 
       let newCity = response.name;
-
-
-
       cityArr.push(newCity);
+
       localStorage.setItem("city-list", JSON.stringify(cityArr));
       console.log(cityArr);
+      // cityArr.push(newCity);
+
+      // localStorage.setItem("city-list", JSON.stringify(cityArr));
+      
+
+      // function cityCheck(newCity, cityArr) {
+      //   // let cityArr = JSON.parse(localStorage.getItem("city-list")) || [];
+      //   if(cityArr.length === 0){
+      //     cityArr.push(newCity);
+
+      //     localStorage.setItem("city-list", JSON.stringify(cityArr));
+      //     console.log(cityArr);
+
+      //   }
+      //   else{
+
+      //   for (let i = 0; i < cityArr.length; i++) {
+
+      //     if (newCity === cityArr[i]) {
+      //       console.log("Skipped")
+      //     }
+      //     else {
+      //       cityArr.push(newCity);
+
+      //       localStorage.setItem("city-list", JSON.stringify(cityArr));
+      //       console.log(cityArr);
+
+      //     }
+      //   }
+      // }
+      // };
+      // cityCheck(newCity, cityArr);
+
+      // 
 
 
 
@@ -96,18 +130,20 @@ $(document).ready(function () {
       $(".temp").html("Currently:  " + response.main.temp + " &#8457;");
       $(".humidity").html("Humidity:  " + response.main.humidity + " %");
       $(".windspeed").html("Wind Speed:  " + response.wind.speed + " MPH");
-      
-      let uvUrl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latie + "&lon=" + longie + "&appid=bb70df7726fdccc57ce65df7344701bc";
 
+      let uvUrl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latie + "&lon=" + longie + "&appid=bb70df7726fdccc57ce65df7344701bc";
+      console.log(uvUrl);
 
       $.ajax({
 
         url: uvUrl,
         method: "GET"
       }).then(function (response) {
-          console.log(response.value);
+        console.log(response.value);
+
         $(".uv").html("UV Index: " + response.value);
         if (response.value <= 3) {
+
           $(".uv").addClass("good");
         }
         else if (response.value <= 5) {
@@ -135,9 +171,9 @@ $(document).ready(function () {
       // console.log(response.list[5].main.temp);
       // console.log(response.list[0].main.humidity);
       // console.log(response.list[0].wind.speed);
-      let newCity = response.city.name;
+      let newCity1 = response.city.name;
 
-      $(".city-nameO").text(newCity);
+      $(".city-nameO").text(newCity1);
       $(".tempO9").html("9am: " + response.list[3].main.temp + " &#8457;");
       $(".tempO6").html("6pm: " + response.list[6].main.temp + " &#8457;");
       $(".humidityO").html("Humidity: " + response.list[4].main.humidity + " %");
@@ -147,7 +183,7 @@ $(document).ready(function () {
       let iconOURL = "https://openweathermap.org/img/w/" + iconO + ".png";
       $(".icon1").attr({ src: iconOURL, alt: "Weather icon." });
 
-      $(".city-nameT").text(newCity);
+      $(".city-nameT").text(newCity1);
       $(".tempT9").html("9am: " + response.list[11].main.temp + " &#8457;");
       $(".tempT6").html("6pm: " + response.list[14].main.temp + " &#8457;");
       $(".humidityT").html("Humidity:" + response.list[12].main.humidity + " %");
@@ -157,7 +193,7 @@ $(document).ready(function () {
       let iconTURL = "https://openweathermap.org/img/w/" + iconT + ".png";
       $(".icon2").attr({ src: iconTURL, alt: "Weather icon." });
 
-      $(".city-nameH").text(newCity);
+      $(".city-nameH").text(newCity1);
       $(".tempH9").html("9am: " + response.list[19].main.temp + " &#8457;");
       $(".tempH6").html("6pm: " + response.list[22].main.temp + " &#8457;");
       $(".humidityH").html("Humidity: " + response.list[20].main.humidity + " %");
@@ -167,7 +203,7 @@ $(document).ready(function () {
       let iconHURL = "https://openweathermap.org/img/w/" + iconH + ".png";
       $(".icon3").attr({ src: iconHURL, alt: "Weather icon." });
 
-      $(".city-nameF").text(newCity);
+      $(".city-nameF").text(newCity1);
       $(".tempF9").html("9am: " + response.list[27].main.temp + " &#8457;");
       $(".tempF6").html("6pm: " + response.list[30].main.temp + " &#8457;");
       $(".humidityF").html("Humidity: " + response.list[28].main.humidity + " %");
@@ -177,7 +213,7 @@ $(document).ready(function () {
       let iconFURL = "https://openweathermap.org/img/w/" + iconF + ".png";
       $(".icon4").attr({ src: iconFURL, alt: "Weather icon." });
 
-      $(".city-nameI").text(newCity);
+      $(".city-nameI").text(newCity1);
       $(".tempI9").html("9am: " + response.list[35].main.temp + " &#8457;");
       $(".tempI6").html("6pm: " + response.list[38].main.temp + " &#8457;");
       $(".humidityI").html("Humidity: " + response.list[36].main.humidity + " %");
@@ -188,7 +224,7 @@ $(document).ready(function () {
       $(".icon5").attr({ src: iconIURL, alt: "Weather icon." });
     })
   };
-  ;
+
 
 
   // 
