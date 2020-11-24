@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
-  const iconEl = document.querySelector(".icon");
-  let cityArr = JSON.parse(localStorage.getItem("city-list")) || [];
-  console.log(cityArr)
+  // Array to contain searched cities
+  const cityArr = JSON.parse(localStorage.getItem("city-list")) || [];
+  // Function to create buttons from previously searched cities
   function cityList() {
     cityArr.forEach(function (city) {
       let tRow = $(`<button type="button" class="btn btn-primary city-btn" id="${city}">${city}</button>`);
@@ -13,12 +13,13 @@ $(document).ready(function () {
   };
   cityList();
 
-  console.log(cityArr.length);
-  let currentCity = localStorage.getItem("currentCity") || "";
+  // Variables to store and display latest city searched
+  const currentCity = localStorage.getItem("currentCity") || "";
   localStorage.getItem("currentCity", currentCity);
-  console.log(currentCity);
+  
   searchWeather(currentCity);
 
+  // Function to convert time from unix timestamp to a readable display format
   function timeConverter(UNIX_timestamp) {
     var a = new Date(UNIX_timestamp * 1000);
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -29,31 +30,30 @@ $(document).ready(function () {
     return time;
   }
 
-
+// Event listener for search button
   $("#search-button").on("click", function (event) {
     event.preventDefault();
     let input = $("#form-input").val();
 
     searchWeather(input);
-    console.log(input);
+  
     $("#form-input").val("");
 
   });
-
+// Event listener for buttons created from previous searches
   $(".city-btn").on("click", function (event) {
     event.preventDefault();
     let city = $(this).text();
    
     searchWeather(city);
-    console.log(city);
-  });
 
+  });
+// Function to do ajax call and return search data to populate html file
   function searchWeather(city) {
     let currentCity = city;
     localStorage.setItem("currentCity", currentCity);
 
-    // let city = "seattle";
-    // console.log(city);
+    
     let apiKey = "bb70df7726fdccc57ce65df7344701bc";
     let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey;
 
@@ -66,7 +66,7 @@ $(document).ready(function () {
       let date = timeConverter(response.dt);
       let latie = parseInt(response.coord.lat);
       let longie = parseInt(response.coord.lon);
-      console.log(latie);
+
       let icon = response.weather[0].icon;
       let iconURL = "https://openweathermap.org/img/w/" + icon + ".png";
       $(".icon").attr({ src: iconURL, alt: "Weather icon." });
@@ -80,8 +80,10 @@ $(document).ready(function () {
         if (cityArr.indexOf(newCity) === -1) {
           cityArr.push(newCity);
           window.localStorage.setItem("city-list", JSON.stringify(cityArr));
+          let tRow = $(`<button type="button" class="btn btn-primary city-btn" id="${newCity}">${newCity}</button>`);
+          $(".listie").append(tRow);
         }
-        cityList();
+      
       }
      
 
@@ -98,16 +100,15 @@ $(document).ready(function () {
       $(".temp").html("Currently:  " + response.main.temp + " &#8457;");
       $(".humidity").html("Humidity:  " + response.main.humidity + " %");
       $(".windspeed").html("Wind Speed:  " + response.wind.speed + " MPH");
-
+      // Ajax call to get uv index information to populate index.html
       let uvUrl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latie + "&lon=" + longie + "&appid=bb70df7726fdccc57ce65df7344701bc";
-      console.log(uvUrl);
 
       $.ajax({
 
         url: uvUrl,
         method: "GET"
       }).then(function (response) {
-        console.log(response.value);
+        // Uses uv index response to add classes that change color of the uv index displayed
 
         $(".uv").html("UV Index: " + response.value);
         if (response.value <= 3) {
@@ -125,20 +126,17 @@ $(document).ready(function () {
         }
       })
 
-      // console.log(response.value);
+     
 
 
 
     })
+    // Ajax call to get the five day forecast
     $.ajax({
       url: forecastURL,
       method: "GET"
     }).then(function (response) {
-      console.log(response);
-      // console.log(response.list[1].main.temp);
-      // console.log(response.list[5].main.temp);
-      // console.log(response.list[0].main.humidity);
-      // console.log(response.list[0].wind.speed);
+      // Populates the html with the five day forecast
       let newCity1 = response.city.name;
 
       $(".city-nameO").text(newCity1);
@@ -193,17 +191,4 @@ $(document).ready(function () {
     })
   };
 
-
-
-  // 
-
-
-  // btnEl.$("onclick", function(event) {
-  //     event.preventDefault();
-  //     if(event.target.matches("button")) {
-  //       var item = document.createElement("div");
-  //       item.textContent = listieEl[event.text];
-  //       listieEl.append(item);
-  //     }
-  //   });
 })
