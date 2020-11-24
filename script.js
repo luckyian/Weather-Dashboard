@@ -1,7 +1,8 @@
 $(document).ready(function () {
 
   // Array to contain searched cities
-  const cityArr = JSON.parse(localStorage.getItem("city-list")) || [];
+  let cityArr = JSON.parse(localStorage.getItem("city-list")) || [];
+  
   // Function to create buttons from previously searched cities
   function cityList() {
     cityArr.forEach(function (city) {
@@ -14,7 +15,7 @@ $(document).ready(function () {
   cityList();
 
   // Variables to store and display latest city searched
-  const currentCity = localStorage.getItem("currentCity") || "";
+  let currentCity = localStorage.getItem("currentCity") || "";
   localStorage.getItem("currentCity", currentCity);
   
   searchWeather(currentCity);
@@ -83,7 +84,15 @@ $(document).ready(function () {
           let tRow = $(`<button type="button" class="btn btn-primary city-btn" id="${newCity}">${newCity}</button>`);
           $(".listie").append(tRow);
         }
-      
+       
+
+      }
+
+      else {
+        cityArr.push(newCity);
+        window.localStorage.setItem("city-list", JSON.stringify(cityArr));
+        let tRow = $(`<button type="button" class="btn btn-primary city-btn" id="${newCity}">${newCity}</button>`);
+        $(".listie").append(tRow);
       }
      
 
