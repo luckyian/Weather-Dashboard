@@ -2,7 +2,7 @@ $(document).ready(function () {
 
   // Array to contain searched cities
   let cityArr = JSON.parse(localStorage.getItem("city-list")) || [];
-  
+
   // Function to create buttons from previously searched cities
   function cityList() {
     cityArr.forEach(function (city) {
@@ -17,7 +17,7 @@ $(document).ready(function () {
   // Variables to store and display latest city searched
   let currentCity = localStorage.getItem("currentCity") || "";
   localStorage.getItem("currentCity", currentCity);
-  
+
   searchWeather(currentCity);
 
   // Function to convert time from unix timestamp to a readable display format
@@ -31,30 +31,30 @@ $(document).ready(function () {
     return time;
   }
 
-// Event listener for search button
+  // Event listener for search button
   $("#search-button").on("click", function (event) {
     event.preventDefault();
     let input = $("#form-input").val();
 
     searchWeather(input);
-  
+
     $("#form-input").val("");
 
   });
-// Event listener for buttons created from previous searches
+  // Event listener for buttons created from previous searches
   $(".city-btn").on("click", function (event) {
     event.preventDefault();
     let city = $(this).text();
-   
+
     searchWeather(city);
 
   });
-// Function to do ajax call and return search data to populate html file
+  // Function to do ajax call and return search data to populate html file
   function searchWeather(city) {
     let currentCity = city;
     localStorage.setItem("currentCity", currentCity);
 
-    
+
     let apiKey = "bb70df7726fdccc57ce65df7344701bc";
     let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey;
 
@@ -76,7 +76,7 @@ $(document).ready(function () {
       // Changes search result into name populated in the city list and 
       let newCity = response.name;
       if (cityArr.length > 0) {
-        
+
         //IF city doesn't exist then it returns -1
         if (cityArr.indexOf(newCity) === -1) {
           cityArr.push(newCity);
@@ -84,7 +84,7 @@ $(document).ready(function () {
           let tRow = $(`<button type="button" class="btn btn-primary city-btn" id="${newCity}">${newCity}</button>`);
           $(".listie").append(tRow);
         }
-       
+
 
       }
 
@@ -94,10 +94,10 @@ $(document).ready(function () {
         let tRow = $(`<button type="button" class="btn btn-primary city-btn" id="${newCity}">${newCity}</button>`);
         $(".listie").append(tRow);
       }
-     
 
 
-      
+
+
 
 
 
@@ -135,7 +135,7 @@ $(document).ready(function () {
         }
       })
 
-     
+
 
 
 
