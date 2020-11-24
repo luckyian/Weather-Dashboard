@@ -6,17 +6,21 @@ text-align: center;
 
 .jumbie {
  text-align: center;
+ font-weight: bold;
  
+}
+
+.lead {
+
+    font-size: 150%;
+
 }
 
 .jumbotron {
     background-image: url("./Assets/clouds.jpg");
 
 }
-.searchie {
 
-
-}
 
 .listie {
 text-decoration: black;
