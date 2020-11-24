@@ -5,13 +5,13 @@ $(document).ready(function () {
   console.log(cityArr)
   function cityList() {
     cityArr.forEach(function (city) {
-      let tRow = $(`<button type="button" class="btn btn-primary" id="${city}">${city}</button>`);
+      let tRow = $(`<button type="button" class="btn btn-primary city-btn" id="${city}">${city}</button>`);
       $(".listie").append(tRow);
 
     })
 
   };
-  // cityList();
+  cityList();
 
   console.log(cityArr.length);
   let currentCity = localStorage.getItem("currentCity") || "";
@@ -40,21 +40,14 @@ $(document).ready(function () {
 
   });
 
-  $(".btn").on("click", function (event) {
+  $(".city-btn").on("click", function (event) {
     event.preventDefault();
-    // let city = $(event.text).val();
-
-    // searchWeather(city);
-    console.log(event.text);
+    let city = $(this).text();
+   
+    searchWeather(city);
+    console.log(city);
   });
 
-  // $("#city-button").on("click", function(event) {
-  //     event.preventDefault();
-  //     let input = $("#form-input").val();
-
-  //     searchWeather(input);
-  //     console.log(input);
-  // });
   function searchWeather(city) {
     let currentCity = city;
     localStorage.setItem("currentCity", currentCity);
@@ -81,44 +74,19 @@ $(document).ready(function () {
 
       // Changes search result into name populated in the city list and 
       let newCity = response.name;
-      cityArr.push(newCity);
+      if (cityArr.length > 0) {
+        
+        //IF city doesn't exist then it returns -1
+        if (cityArr.indexOf(newCity) === -1) {
+          cityArr.push(newCity);
+          window.localStorage.setItem("city-list", JSON.stringify(cityArr));
+        }
+        cityList();
+      }
+     
 
-      localStorage.setItem("city-list", JSON.stringify(cityArr));
-      console.log(cityArr);
-      // cityArr.push(newCity);
 
-      // localStorage.setItem("city-list", JSON.stringify(cityArr));
       
-
-      // function cityCheck(newCity, cityArr) {
-      //   // let cityArr = JSON.parse(localStorage.getItem("city-list")) || [];
-      //   if(cityArr.length === 0){
-      //     cityArr.push(newCity);
-
-      //     localStorage.setItem("city-list", JSON.stringify(cityArr));
-      //     console.log(cityArr);
-
-      //   }
-      //   else{
-
-      //   for (let i = 0; i < cityArr.length; i++) {
-
-      //     if (newCity === cityArr[i]) {
-      //       console.log("Skipped")
-      //     }
-      //     else {
-      //       cityArr.push(newCity);
-
-      //       localStorage.setItem("city-list", JSON.stringify(cityArr));
-      //       console.log(cityArr);
-
-      //     }
-      //   }
-      // }
-      // };
-      // cityCheck(newCity, cityArr);
-
-      // 
 
 
 
